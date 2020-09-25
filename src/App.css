@@ -1,38 +1,337 @@
-.App {
-  text-align: center;
+/* #################### global #################### */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+@font-face {
+	font-family: "get_schwiftyregular";
+	src: url("./font/get_schwifty-webfont.woff2") format("woff2"),
+		url("./font//get_schwifty-webfont.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+html,
+body {
+	background-image: linear-gradient(to bottom, #0009, #0009),
+		url("img/bg.png");
+
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	height: 100vh;
+	color: #fff;
+	font-family: "Patrick Hand", cursive;
+	letter-spacing: 0.1rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a {
+	text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button,
+button:active,
+button:focus,
+button:hover {
+	outline: none !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.container {
+	max-width: 1100px;
+	margin: auto;
+	padding: 0 20px;
 }
 
-.App-link {
-  color: #61dafb;
+/* #################### Header.js #################### */
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header {
+	height: 300px;
+}
+
+header img {
+	width: 300px;
+	transition: transform 0.3s linear;
+}
+
+header img:hover {
+	cursor: pointer;
+	transform: scale(1.15) rotate(360deg);
+}
+
+/* #################### Search.js #################### */
+
+.search {
+	height: 100px;
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	justify-content: center;
+	align-items: center;
+}
+
+@media (max-width: 900px) {
+	.search {
+		grid-template-rows: 1fr 1fr;
+		grid-template-columns: 1fr;
+	}
+}
+
+input[type="text"] {
+	display: block;
+	padding: 10px;
+	font-size: 1.5rem;
+	font-family: "get_schwiftyregular" !important;
+	font-weight: 700;
+	border: 0;
+	outline-color: #8cc646;
+	color: #24c0dd;
+	border-radius: 5px;
+	width: 90%;
+	margin: auto;
+}
+
+input[type="text"]:focus {
+	box-shadow: 0 0 10px #8cc646, 0 0 20px #8cc646, 0 0 30px #8cc646;
+}
+
+/* #################### Spinner.js #################### */
+
+/* #################### CharacterGrid.js #################### */
+
+.grid {
+	display: flex;
+	flex-direction: column;
+	gap: 5vh;
+}
+
+@media (max-width: 800px) {
+	.grid {
+		margin-top: 20px;
+	}
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.buttons {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.buttons button {
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	color: #fff;
+	background-color: rgb(36, 192, 221);
+	font-size: 1.5rem;
+
+	display: flex;
+	align-items: center;
+
+	transition: color 0.4s ease-in-out;
+}
+
+.buttons button:hover {
+	color: #fff;
+	background-color: #8cc646;
+	cursor: pointer;
+}
+
+.buttons .prev svg,
+.buttons .next svg {
+	transition: transform 0.3s ease-in-out;
+}
+
+.buttons .prev:hover svg {
+	transform: translateX(-5px);
+}
+
+.buttons .next:hover svg {
+	transform: translateX(5px);
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	margin-bottom: 10vh;
+}
+
+@media (max-width: 800px) {
+	.cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 500px) {
+	.cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* #################### CharacterItem.js #################### */
+
+.card {
+	cursor: pointer;
+	background-color: transparent;
+	height: 300px;
+	perspective: 1000px;
+}
+
+.card h1 {
+	font-size: 25px;
+	border-bottom: 1px #fff solid;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+}
+
+.card img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.card-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transition: transform 0.8s;
+	transform-style: preserve-3d;
+}
+
+.card:hover .card-inner {
+	transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	border-radius: 5px;
+}
+
+.card-back {
+	background-color: #3b1b6380;
+	color: #fff;
+	padding: 20px;
+	transform: rotateY(180deg);
+	overflow: scroll;
+	font-size: 1.1rem;
+}
+
+.card li {
+	list-style: none;
+	padding-bottom: 5px;
+}
+
+.sameline {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+/* #################### Checkbox - Alive/Dead #################### */
+
+.boxes {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 900px) {
+	.boxes {
+		gap: 20px;
+	}
+	.box {
+		justify-content: flex-end;
+	}
+	.boxes > .box ~ .box {
+		justify-content: flex-start;
+	}
+	.labelone {
+		padding-right: 40px !important;
+	}
+	.labeltwo {
+		padding-left: 45px !important;
+	}
+}
+
+.box {
+	width: 100%;
+	margin: 25px 0;
+	display: flex;
+	align-items: center;
+	user-select: none;
+}
+
+.box label {
+	font-size: 26px;
+	color: #fff;
+	position: absolute;
+	z-index: 10;
+	padding-left: 50px;
+	cursor: pointer;
+}
+
+.box input {
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+}
+.box #one:checked ~ .check {
+	border-color: #008000;
+	box-shadow: 0px 0px 0px 15px #008000 inset;
+}
+
+.box #two:checked ~ .check {
+	border-color: #ff0000;
+	box-shadow: 0px 0px 0px 15px #ff0000 inset;
+}
+
+.box input:checked::after {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.box .check {
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	border-radius: 100px;
+	background-color: #fff;
+	border: 2px solid #fff;
+	box-shadow: 0px 0px 0px 0px #fff inset;
+	transition: all 0.15s cubic-bezier(0, 1.05, 0.72, 1.07);
+}
+
+.box .check::after {
+	content: "";
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 4;
+	position: absolute;
+	transform: scale(0);
+	background-size: 50%;
+	background-image: url("http://s6.picofile.com/d/8392306668/c38c12a0-6db3-47d4-a80c-7dad8fab5186/checkmark.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+	transition-delay: 0.2s !important;
+	transition: all 0.25s cubic-bezier(0, 1.05, 0.72, 1.07);
 }
